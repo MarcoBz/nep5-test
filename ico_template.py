@@ -36,6 +36,8 @@ def Main(operation, args):
     # This contract's address can proceed
     if trigger == Verification():
 
+        print('Verification')
+
         # check if the invoker is the owner of this contract
         is_owner = CheckWitness(TOKEN_OWNER)
 
@@ -50,6 +52,8 @@ def Main(operation, args):
         return can_exchange(ctx, attachments, True)
 
     elif trigger == Application():
+
+        print('Application')
 
         for op in NEP5_METHODS:
             if operation == op:
@@ -90,6 +94,7 @@ def deploy():
     :return:
         bool: Whether the operation was successful
     """
+
     if not CheckWitness(TOKEN_OWNER):
         print("Must be owner to deploy")
         return False
@@ -101,3 +106,18 @@ def deploy():
         return add_to_circulation(ctx, TOKEN_INITIAL_AMOUNT)
 
     return False
+
+def get_storage(args):
+
+    key = args[0]
+
+    value = Get(ctx, key)
+
+    len_value = len(value)
+    index = 0
+
+    while index < len_value:
+        print(value[index])
+        index += 1
+
+    return True

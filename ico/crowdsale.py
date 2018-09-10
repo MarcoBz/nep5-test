@@ -84,11 +84,13 @@ def perform_exchange(ctx):
     # lookup the current balance of the address
     current_balance = Get(ctx, attachments[1])
 
+    exchanged_tokens = 0
+
     # calculate the amount of tokens the attached neo will earn
-    exchanged_tokens = attachments[2] * TOKENS_PER_NEO / 100000000
+    exchanged_tokens += attachments[2] * TOKENS_PER_NEO / 100000000
 
     # if you want to exchange gas instead of neo, use this
-    # exchanged_tokens += attachments[3] * TOKENS_PER_GAS / 100000000
+    exchanged_tokens += attachments[3] * TOKENS_PER_GAS / 100000000
 
     # add it to the the exchanged tokens and persist in storage
     new_total = exchanged_tokens + current_balance
@@ -118,14 +120,21 @@ def can_exchange(ctx, attachments, verify_only):
     """
 
     # if you are accepting gas, use this
-   if attachments[3] == 0:
-        print("no gas attached")
-        return False
+    #if attachments[3] == 0:
+     #   print("no gas attached")
+    #  return False
 
     # if youre accepting neo, use this
  
-    if attachments[2] == 0:
+    #if attachments[2] == 0:
+     #   return False
+
+     #accepting both neo and gas
+     
+    if attachments[3] == 0 and attachments[2] == 0:
+        print("neither gas nor neo attached")
         return False
+
 
     # the following looks up whether an address has been
     # registered with the contract for KYC regulations
@@ -169,6 +178,7 @@ def calculate_can_exchange(ctx, amount, address, verify_only):
     :return:
         bool: Whether or not an address can exchange a specified amount
     """
+
     height = GetHeight()
 
     current_in_circulation = Get(ctx, TOKEN_CIRC_KEY)

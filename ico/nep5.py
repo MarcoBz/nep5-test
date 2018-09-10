@@ -49,6 +49,7 @@ def handle_nep51(ctx, operation, args):
 
 def do_transfer(ctx, t_from, t_to, amount):
 
+
     if amount <= 0:
         return False
 

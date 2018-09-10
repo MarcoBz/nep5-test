@@ -4,9 +4,9 @@ Basic settings for an NEP5 Token and crowdsale
 
 from boa.interop.Neo.Storage import *
 
-TOKEN_NAME = 'TOKEN TEST'
+TOKEN_NAME = 'TOKEN TEST7'
 
-TOKEN_SYMBOL = 'TEST'
+TOKEN_SYMBOL = 'TEST7'
 
 TOKEN_DECIMALS = 8
 
@@ -33,7 +33,7 @@ MAX_EXCHANGE_LIMITED_ROUND = 500 * 40 * 100000000
 BLOCK_SALE_START = 0
 
 # when to end the initial limited round
-LIMITED_ROUND_END = 1000000000
+LIMITED_ROUND_END = 5
 
 KYC_KEY = b'kyc_ok'
 
@@ -45,6 +45,7 @@ def crowdsale_available_amount(ctx):
 
     :return: int The amount of tokens left for sale in the crowdsale
     """
+    print('available amount')
 
     in_circ = Get(ctx, TOKEN_CIRC_KEY)
 
@@ -59,9 +60,7 @@ def add_to_circulation(ctx, amount):
 
     :param amount: int the amount to add to circulation
     """
-
     current_supply = Get(ctx, TOKEN_CIRC_KEY)
-
     current_supply += amount
     Put(ctx, TOKEN_CIRC_KEY, current_supply)
     return True
